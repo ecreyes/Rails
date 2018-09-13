@@ -1,0 +1,11 @@
+<div class="container-fluid"> 
+    <h1>Articulos!</h1>
+
+    <%@articles.each do |article| %>
+        <p>Titulo: <%=article.title%> </p>
+        <p>Cuerpo: <%=article.body %> </p>
+        <p>Contador Visitas: <%=article.visits_count %></p>
+                <%=link_to "Show",article_path(:id => article.id) %>
+        <br>
+    <%end%>
+</div>
