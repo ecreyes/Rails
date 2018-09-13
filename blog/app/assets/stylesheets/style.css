@@ -1,0 +1,25 @@
+html,body{
+    margin:0px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.be-red{
+    background-color: rgb(200,50,50);
+}
+
+.white{
+    color:white;
+}
+
+.large-padding{
+    padding: 10px 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+a,a:visited{
+    color: inherit !important;
+    text-decoration: none;
+}
