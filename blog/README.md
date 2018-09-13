@@ -116,3 +116,112 @@ Resultando:
 </ul>
 </nav>
 ```
+
+## Rutas
+Las rutas de nuestro proyecto se encuentran en `config/routes.erb`
+Los verbos `HTTP` utilizados en ruby on rails son los siguientes:
+* GET "datos por url"
+* POST "datos por debajo o formularios"
+* PATCH
+* PUT
+* DELETE "eliminar datos"
+
+En rails cuando se tiene la ruta:
+```ruby
+get "welcome/index"
+```
+se refiere al verbo `GET`,luego debe ir al controlador `welcome` a la accion `index`.
+
+Si uno quisiera cambiar la dirección a otra cualquiera se utiliza:
+```ruby
+get "nombre" to: "welcome#index"
+```
+donde `nombre` puede ser cualquier nombre y se refiere  al mismo controlador y accion que antes.
+
+Si se crea la ruta:
+```ruby
+resources :articles
+```
+Es lo mismo que tener:
+```ruby
+get "/articles" #INDEX
+post "/articles" #CREATE
+delete "/articles/:id" #DESTROY
+get "/articles/:id" #SHOW
+get "/articles/new" #NEW
+get "/articles/:id/edit" #EDIT
+patch "/articles/:id" #UPDATE
+put "/articles/:id" #UPDATE
+```
+Los comentarios son las acciones que se buscan en el controlador.
+* Index muestra todos los articulos.
+* Show solo muestra 1 articulo.
+* New es el formulario que se envia en caso de crear un articulo pero solo esta en la memoria.
+* Create crea el articulo en la base de datos.
+* Delete elimina el articulo de la base de datos
+
+
+Tambien se pueden excluir algunas rutas de la siguiente forma:
+```ruby
+resources :articles, except: [:delete] 
+```
+o sino:
+```ruby
+resources :articles, only: [:create,:show]
+```
+que solamente crea esas 2 rutas.
+
+## Pasando datos de controlador a vista
+Al crear `resources :articles` si uno trata de entrar a cualquier vista, como la `http://localhost:3000/articles` por ejemplo, no se va a poder y va a mandar un error `uninitialized constant ArticlesController`.Para solucionar este error se tiene que crear el controlador con:
+```bash
+rails g controller Articles
+```
+Recordar que esto crea un controlador en `app/contollers` con el nombre de `articles_controller` y crea una carpeta en views.
+
+Ahora si se trata de acceder por get `http://localhost:3000/articles` muestra el siguiente error `The action 'index' could not be found for ArticlesController` esto significa que hay que crear la accion index en el controlador:
+```ruby
+def index
+end
+```
+Ahora si se trata de acceder muestra el siguiente error: `ActionController::UnknownFormat in ArticlesController#index`, esto quiere decir que encontro la accion pero no una vista asociada por lo que hay que crearla en `app/views/articles` con el nombre de `index.html.erb`.
+
+Como ya se tiene el modelo creado en `app/models` en el archivo `article.rb` la primera linea es `class Article < ApplicationRecord`, entonces hay que usar `Article` como active record en `articles_controller`.
+
+resultando en el metodo index:
+```ruby
+def index
+    @articles = Article.all
+    puts "Entro a index" #console.log js
+end
+```
+donde `@articles` es una variable de clase, esto permite que la variable pueda ser accedida desde la vista como del controlador.Las variables que empiezan sin el `@` solo son accedidas por el controlador.
+
+En la vista de index para inspeccionar la variable `@articles` se utiliza:
+```ruby
+<%= @articles.inspect %>
+```
+
+Para mostrar los elementos con `show`, se crea la vista `show.html.erb` y en el controlador se crea la accion:
+```ruby
+def show
+    @article = Article.find(params[:id])
+    puts params #console.log de js
+end
+```
+`params` es como un diccionario que recibe todos los datos que son enviados, ya sea por formularios, urls, etc.
+
+Finalmente las vistas quedan:
+
+index:
+```ruby
+<% @articles.each do |t| %>
+	<h1><%= t.title %></h1>
+	<div><%= t.body %></div>
+<%end%>	
+```
+
+show:
+```ruby
+<h1><%= @article.title%></h1>
+<div><%= @article.body %></div>
+```
