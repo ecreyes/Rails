@@ -10,13 +10,24 @@
   </head>
 
   <body>
-    <nav class="be-red white large-padding">
-      <ul class="no-list row center-xs">
-        <li class="col-md"><%=link_to "Inicio",root_path %></li>
-        <li class="col-md"><%=link_to "Articulos",articles_path %></li>
-        <li class="col-md">Panel Admin</li>
-        <li class="col-md">Contacto</li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+      <a class="navbar-brand" href="#">
+        Rails
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%=link_to "Inicio",root_path,class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%=link_to "Articulos",articles_path, class:"nav-link" %>
+          </li>
+        </ul>
+      </div>
     </nav>
     <%= yield %>
 

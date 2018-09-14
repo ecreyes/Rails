@@ -1,0 +1,27 @@
+<%=form_for(@article) do |f| %>
+    <% @article.errors.full_messages.each do |mensaje| %>
+    <div class="alert alert-danger" role="alert">
+        <%=mensaje%>
+    </div>
+    <%end%>
+    <div class="form-group">
+        <%= f.label :title, "Titulo:",class:"col-2 col-form-label" %>
+        <div class="col-8">
+            <%= f.text_field :title,placeholder: "Título", class: 'form-control' %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <%= f.label :body, "Cuerpo de mensaje",class:"col-2 form-label" %>
+        <div class="col-8">
+            <%= f.text_area :body,placeholder: "Escribe tu articulo",class: 'form-control' %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class ="col-2"></div>
+        <div class="col-8">
+            <%= f.submit "Enviar",class: 'btn btn-success float-right'%>
+        </div>
+    </div>
+<%end%>

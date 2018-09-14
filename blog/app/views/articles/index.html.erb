@@ -1,11 +1,24 @@
-<div class="container-fluid"> 
-    <h1>Articulos!</h1>
-
-    <%@articles.each do |article| %>
-        <p>Titulo: <%=article.title%> </p>
-        <p>Cuerpo: <%=article.body %> </p>
-        <p>Contador Visitas: <%=article.visits_count %></p>
-                <%=link_to "Show",article_path(:id => article.id) %>
-        <br>
-    <%end%>
+<div class="container main-container"> 
+    <div class="row">
+        <div class="col-11">
+            <h1>Articulos!</h1>
+        </div>
+        <div class="col-1">
+            <%=link_to "Nuevo",new_article_path,class:"btn btn-outline-success" %>
+        </div>
+    </div>
+    <hr>
+    <div class="card-columns">
+        <%@articles.each do |article| %>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><%=article.title%></h5>
+                    <p class="card-text"> <%=article.body %></p>
+                    <p class="card-text"><small class="text-muted">Contador Visitas: <%=article.visits_count %></small></p>
+                </div>
+                <%=link_to "Eliminar", article, class:"btn btn-outline-danger float-right", method: :delete%>
+                <%=link_to "Ver",article_path(:id => article.id),class:"btn btn-outline-info float-right" %>
+             </div>
+        <%end%>
+    </div>
 </div>
