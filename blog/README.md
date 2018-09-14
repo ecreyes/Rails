@@ -156,8 +156,8 @@ put "/articles/:id" #UPDATE
 Los comentarios son las acciones que se buscan en el controlador.
 * Index muestra todos los articulos.
 * Show solo muestra 1 articulo.
-* New es el formulario que se envia en caso de crear un articulo pero solo esta en la memoria.
-* Create crea el articulo en la base de datos.
+* New es el formulario que se envia en caso de crear un articulo pero solo esta en la memoria, esta asociado a la vista del formulario.
+* Create crea el articulo en la base de datos, es la peticion POST.
 * Delete elimina el articulo de la base de datos
 
 
@@ -170,6 +170,8 @@ o sino:
 resources :articles, only: [:create,:show]
 ```
 que solamente crea esas 2 rutas.
+
+Nota, al hacer `resources :articles` significa que se tiene que crear posteriormente un controlador que se llame Articles.
 
 ## Pasando datos de controlador a vista
 Al crear `resources :articles` si uno trata de entrar a cualquier vista, como la `http://localhost:3000/articles` por ejemplo, no se va a poder y va a mandar un error `uninitialized constant ArticlesController`.Para solucionar este error se tiene que crear el controlador con:
